@@ -1,11 +1,10 @@
 # Dependencies and build artifacts
-/node_modules
-/dist
-venv
+/__pycache__
+*.pyc
 
 # Configuration and credentials
 .env
-google_credentials.json
+env/
 models.yaml
 
 # Data and model files
