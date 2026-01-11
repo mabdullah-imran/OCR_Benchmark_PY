@@ -1,0 +1,3 @@
+Extract data from the following document based on the JSON schema.
+Return null if the document does not contain information relevant to schema.
+Return only the JSON with no explanation text.

@@ -1,0 +1,3039 @@
+[
+  {
+    "fileUrl": "https://omni-demo-data.s3.us-east-1.amazonaws.com/templates/receipt.png",
+    "metadata": {
+      "orientation": 0,
+      "documentQuality": "clean",
+      "resolution": [
+        612,
+        792
+      ],
+      "language": "EN"
+    },
+    "jsonSchema": {
+      "type": "object",
+      "required": [
+        "merchant",
+        "receipt_details",
+        "totals"
+      ],
+      "properties": {
+        "totals": {
+          "type": "object",
+          "required": [
+            "total"
+          ],
+          "properties": {
+            "tax": {
+              "type": "number",
+              "description": "Tax amount"
+            },
+            "total": {
+              "type": "number",
+              "description": "Final total amount"
+            },
+            "subtotal": {
+              "type": "number",
+              "description": "Subtotal before tax and fees"
+            }
+          },
+          "description": "Payment totals"
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Business name"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Contact phone number"
+            },
+            "address": {
+              "type": "string",
+              "description": "Store location address"
+            }
+          },
+          "description": "Basic merchant information"
+        },
+        "line_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "description",
+              "amount"
+            ],
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Price of the item"
+              },
+              "description": {
+                "type": "string",
+                "description": "Item name or description"
+              }
+            }
+          },
+          "description": "List of purchased items"
+        },
+        "receipt_details": {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Transaction date"
+            },
+            "time": {
+              "type": "string",
+              "description": "Transaction time"
+            },
+            "receipt_number": {
+              "type": "string",
+              "description": "Receipt or ticket number"
+            }
+          },
+          "description": "Transaction details"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "description": ""
+            },
+            "card_last_four_digits": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "ocrModel": "gpt-5.2-2025-12-11",
+    "extractionModel": "gpt-5.2-2025-12-11",
+    "directImageExtraction": true,
+    "trueMarkdown": "**NICK THE GREEK**\n\nSOUVLAKI & GYRO HOUSE\n\n**San Francisco**\n\n121 spear streeet  \nSuite B08  \nsan francisco, CA  \n94105  \n(415) 757-0426  \nwww.nickthegreeksj.com\n\nNovember 8, 2024  \n2:16 PM  \nSamantha\n\nTicket: 17  \nReceipt: NKZ1  \nAuthorization: CF2D4F\n\nMastercard  \nAID A0 00 00 00 04 10 10\n\n**TO GO**\n\nBeef/Lamb Gyro Pita $12.50  \nGyro Bowl $13.25  \nBeef/Lamb Gyro  \nPork Gyro Pita $16.50  \nFries & Drink ($4.00)\n\nSubtotal $42.25  \nSF Mandate (6%) $2.54  \n8.625% (8.625%) $3.64\n\n**Total** $48.43  \nMastercard 0920 (Contactless) $48.43",
+    "trueJson": {
+      "totals": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      },
+      "merchant": {
+        "name": "Nick the Greek Souvlaki & Gyro House",
+        "phone": "(415) 757-0426",
+        "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+      },
+      "line_items": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "receipt_details": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "payment": {
+        "payment_method": "Mastercard",
+        "card_last_four_digits": "0920"
+      }
+    },
+    "predictedMarkdown": null,
+    "predictedJson": {
+      "location": {
+        "city": "San Francisco",
+        "address_line1": "121 spear streeet",
+        "address_line2": "Suite B08",
+        "state": "CA",
+        "postal_code": "94105",
+        "phone": "(415) 757-0426",
+        "website": "www.nickthegreeksj.com"
+      },
+      "transaction": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "cashier": "Samantha",
+        "ticket": "17",
+        "receipt": "NKZ1",
+        "authorization": "CF2D4F",
+        "payment": {
+          "card_brand": "Mastercard",
+          "aid": "A0 00 00 00 04 10 10",
+          "card_last4": "0920",
+          "method": "Contactless"
+        },
+        "order_type": "TO GO"
+      },
+      "items": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "details": [
+            "Beef/Lamb Gyro"
+          ]
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "details": [
+            "Fries & Drink ($4.00)"
+          ]
+        }
+      ],
+      "totals": {
+        "subtotal": 42.25,
+        "fees": [
+          {
+            "name": "SF Mandate",
+            "rate": "6%",
+            "amount": 2.54
+          }
+        ],
+        "taxes": [
+          {
+            "name": "Tax",
+            "rate": "8.625%",
+            "amount": 3.64
+          }
+        ],
+        "total": 48.43,
+        "amount_paid": 48.43,
+        "currency": "USD"
+      }
+    },
+    "jsonAccuracy": 0.0,
+    "jsonDiff": {
+      "items__added": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "details": [
+            "Beef/Lamb Gyro"
+          ]
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "details": [
+            "Fries & Drink ($4.00)"
+          ]
+        }
+      ],
+      "line_items__deleted": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "location__added": {
+        "city": "San Francisco",
+        "address_line1": "121 spear streeet",
+        "address_line2": "Suite B08",
+        "state": "CA",
+        "postal_code": "94105",
+        "phone": "(415) 757-0426",
+        "website": "www.nickthegreeksj.com"
+      },
+      "merchant__deleted": {
+        "name": "Nick the Greek Souvlaki & Gyro House",
+        "phone": "(415) 757-0426",
+        "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+      },
+      "payment__deleted": {
+        "payment_method": "Mastercard",
+        "card_last_four_digits": "0920"
+      },
+      "receipt_details__deleted": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "totals": {
+        "amount_paid__added": 48.43,
+        "currency__added": "USD",
+        "fees__added": [
+          {
+            "name": "SF Mandate",
+            "rate": "6%",
+            "amount": 2.54
+          }
+        ],
+        "tax__deleted": 6.18,
+        "taxes__added": [
+          {
+            "name": "Tax",
+            "rate": "8.625%",
+            "amount": 3.64
+          }
+        ]
+      },
+      "transaction__added": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "cashier": "Samantha",
+        "ticket": "17",
+        "receipt": "NKZ1",
+        "authorization": "CF2D4F",
+        "payment": {
+          "card_brand": "Mastercard",
+          "aid": "A0 00 00 00 04 10 10",
+          "card_last4": "0920",
+          "method": "Contactless"
+        },
+        "order_type": "TO GO"
+      }
+    },
+    "fullJsonDiff": {
+      "items": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "details": [
+              "Beef/Lamb Gyro"
+            ]
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "details": [
+              "Fries & Drink ($4.00)"
+            ]
+          }
+        ]
+      },
+      "line_items": {
+        "__op": "-",
+        "__old": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ]
+      },
+      "location": {
+        "__op": "+",
+        "__new": {
+          "city": "San Francisco",
+          "address_line1": "121 spear streeet",
+          "address_line2": "Suite B08",
+          "state": "CA",
+          "postal_code": "94105",
+          "phone": "(415) 757-0426",
+          "website": "www.nickthegreeksj.com"
+        }
+      },
+      "merchant": {
+        "__op": "-",
+        "__old": {
+          "name": "Nick the Greek Souvlaki & Gyro House",
+          "phone": "(415) 757-0426",
+          "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+        }
+      },
+      "payment": {
+        "__op": "-",
+        "__old": {
+          "payment_method": "Mastercard",
+          "card_last_four_digits": "0920"
+        }
+      },
+      "receipt_details": {
+        "__op": "-",
+        "__old": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        }
+      },
+      "totals": {
+        "__op": "~",
+        "diff": {
+          "amount_paid": {
+            "__op": "+",
+            "__new": 48.43
+          },
+          "currency": {
+            "__op": "+",
+            "__new": "USD"
+          },
+          "fees": {
+            "__op": "+",
+            "__new": [
+              {
+                "name": "SF Mandate",
+                "rate": "6%",
+                "amount": 2.54
+              }
+            ]
+          },
+          "tax": {
+            "__op": "-",
+            "__old": 6.18
+          },
+          "taxes": {
+            "__op": "+",
+            "__new": [
+              {
+                "name": "Tax",
+                "rate": "8.625%",
+                "amount": 3.64
+              }
+            ]
+          }
+        }
+      },
+      "transaction": {
+        "__op": "+",
+        "__new": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "cashier": "Samantha",
+          "ticket": "17",
+          "receipt": "NKZ1",
+          "authorization": "CF2D4F",
+          "payment": {
+            "card_brand": "Mastercard",
+            "aid": "A0 00 00 00 04 10 10",
+            "card_last4": "0920",
+            "method": "Contactless"
+          },
+          "order_type": "TO GO"
+        }
+      }
+    },
+    "jsonDiffStats": {
+      "additions": 34,
+      "deletions": 15,
+      "modifications": 0,
+      "total": 49
+    },
+    "jsonAccuracyResult": {
+      "score": 0.0,
+      "jsonDiff": {
+        "items__added": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "details": [
+              "Beef/Lamb Gyro"
+            ]
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "details": [
+              "Fries & Drink ($4.00)"
+            ]
+          }
+        ],
+        "line_items__deleted": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ],
+        "location__added": {
+          "city": "San Francisco",
+          "address_line1": "121 spear streeet",
+          "address_line2": "Suite B08",
+          "state": "CA",
+          "postal_code": "94105",
+          "phone": "(415) 757-0426",
+          "website": "www.nickthegreeksj.com"
+        },
+        "merchant__deleted": {
+          "name": "Nick the Greek Souvlaki & Gyro House",
+          "phone": "(415) 757-0426",
+          "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+        },
+        "payment__deleted": {
+          "payment_method": "Mastercard",
+          "card_last_four_digits": "0920"
+        },
+        "receipt_details__deleted": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        },
+        "totals": {
+          "amount_paid__added": 48.43,
+          "currency__added": "USD",
+          "fees__added": [
+            {
+              "name": "SF Mandate",
+              "rate": "6%",
+              "amount": 2.54
+            }
+          ],
+          "tax__deleted": 6.18,
+          "taxes__added": [
+            {
+              "name": "Tax",
+              "rate": "8.625%",
+              "amount": 3.64
+            }
+          ]
+        },
+        "transaction__added": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "cashier": "Samantha",
+          "ticket": "17",
+          "receipt": "NKZ1",
+          "authorization": "CF2D4F",
+          "payment": {
+            "card_brand": "Mastercard",
+            "aid": "A0 00 00 00 04 10 10",
+            "card_last4": "0920",
+            "method": "Contactless"
+          },
+          "order_type": "TO GO"
+        }
+      },
+      "fullJsonDiff": {
+        "items": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "Beef/Lamb Gyro Pita",
+              "price": 12.5
+            },
+            {
+              "name": "Gyro Bowl",
+              "price": 13.25,
+              "details": [
+                "Beef/Lamb Gyro"
+              ]
+            },
+            {
+              "name": "Pork Gyro Pita",
+              "price": 16.5,
+              "details": [
+                "Fries & Drink ($4.00)"
+              ]
+            }
+          ]
+        },
+        "line_items": {
+          "__op": "-",
+          "__old": [
+            {
+              "amount": 12.5,
+              "description": "Beef/Lamb Gyro Pita"
+            },
+            {
+              "amount": 13.25,
+              "description": "Gyro Bowl"
+            },
+            {
+              "amount": 16.5,
+              "description": "Pork Gyro Pita"
+            }
+          ]
+        },
+        "location": {
+          "__op": "+",
+          "__new": {
+            "city": "San Francisco",
+            "address_line1": "121 spear streeet",
+            "address_line2": "Suite B08",
+            "state": "CA",
+            "postal_code": "94105",
+            "phone": "(415) 757-0426",
+            "website": "www.nickthegreeksj.com"
+          }
+        },
+        "merchant": {
+          "__op": "-",
+          "__old": {
+            "name": "Nick the Greek Souvlaki & Gyro House",
+            "phone": "(415) 757-0426",
+            "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+          }
+        },
+        "payment": {
+          "__op": "-",
+          "__old": {
+            "payment_method": "Mastercard",
+            "card_last_four_digits": "0920"
+          }
+        },
+        "receipt_details": {
+          "__op": "-",
+          "__old": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "receipt_number": "NKZ1"
+          }
+        },
+        "totals": {
+          "__op": "~",
+          "diff": {
+            "amount_paid": {
+              "__op": "+",
+              "__new": 48.43
+            },
+            "currency": {
+              "__op": "+",
+              "__new": "USD"
+            },
+            "fees": {
+              "__op": "+",
+              "__new": [
+                {
+                  "name": "SF Mandate",
+                  "rate": "6%",
+                  "amount": 2.54
+                }
+              ]
+            },
+            "tax": {
+              "__op": "-",
+              "__old": 6.18
+            },
+            "taxes": {
+              "__op": "+",
+              "__new": [
+                {
+                  "name": "Tax",
+                  "rate": "8.625%",
+                  "amount": 3.64
+                }
+              ]
+            }
+          }
+        },
+        "transaction": {
+          "__op": "+",
+          "__new": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "cashier": "Samantha",
+            "ticket": "17",
+            "receipt": "NKZ1",
+            "authorization": "CF2D4F",
+            "payment": {
+              "card_brand": "Mastercard",
+              "aid": "A0 00 00 00 04 10 10",
+              "card_last4": "0920",
+              "method": "Contactless"
+            },
+            "order_type": "TO GO"
+          }
+        }
+      },
+      "jsonDiffStats": {
+        "additions": 34,
+        "deletions": 15,
+        "modifications": 0,
+        "total": 49
+      },
+      "totalFields": 17
+    },
+    "usage": {
+      "extraction": {
+        "input_tokens": 1837,
+        "input_tokens_details": "InputTokensDetails(cached_tokens=0)",
+        "output_tokens": 447,
+        "output_tokens_details": "OutputTokensDetails(reasoning_tokens=0)",
+        "total_tokens": 2284,
+        "duration": 51.56247574099689,
+        "inputTokens": 1837,
+        "outputTokens": 447,
+        "totalTokens": 2284,
+        "inputCost": null,
+        "outputCost": null,
+        "totalCost": null
+      }
+    },
+    "error": null
+  },
+  {
+    "fileUrl": "https://omni-demo-data.s3.us-east-1.amazonaws.com/templates/receipt.png",
+    "metadata": {
+      "orientation": 0,
+      "documentQuality": "clean",
+      "resolution": [
+        612,
+        792
+      ],
+      "language": "EN"
+    },
+    "jsonSchema": {
+      "type": "object",
+      "required": [
+        "merchant",
+        "receipt_details",
+        "totals"
+      ],
+      "properties": {
+        "totals": {
+          "type": "object",
+          "required": [
+            "total"
+          ],
+          "properties": {
+            "tax": {
+              "type": "number",
+              "description": "Tax amount"
+            },
+            "total": {
+              "type": "number",
+              "description": "Final total amount"
+            },
+            "subtotal": {
+              "type": "number",
+              "description": "Subtotal before tax and fees"
+            }
+          },
+          "description": "Payment totals"
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Business name"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Contact phone number"
+            },
+            "address": {
+              "type": "string",
+              "description": "Store location address"
+            }
+          },
+          "description": "Basic merchant information"
+        },
+        "line_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "description",
+              "amount"
+            ],
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Price of the item"
+              },
+              "description": {
+                "type": "string",
+                "description": "Item name or description"
+              }
+            }
+          },
+          "description": "List of purchased items"
+        },
+        "receipt_details": {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Transaction date"
+            },
+            "time": {
+              "type": "string",
+              "description": "Transaction time"
+            },
+            "receipt_number": {
+              "type": "string",
+              "description": "Receipt or ticket number"
+            }
+          },
+          "description": "Transaction details"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "description": ""
+            },
+            "card_last_four_digits": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "ocrModel": "gpt-5-nano-2025-08-07",
+    "extractionModel": "gpt-5-nano-2025-08-07",
+    "directImageExtraction": true,
+    "trueMarkdown": "**NICK THE GREEK**\n\nSOUVLAKI & GYRO HOUSE\n\n**San Francisco**\n\n121 spear streeet  \nSuite B08  \nsan francisco, CA  \n94105  \n(415) 757-0426  \nwww.nickthegreeksj.com\n\nNovember 8, 2024  \n2:16 PM  \nSamantha\n\nTicket: 17  \nReceipt: NKZ1  \nAuthorization: CF2D4F\n\nMastercard  \nAID A0 00 00 00 04 10 10\n\n**TO GO**\n\nBeef/Lamb Gyro Pita $12.50  \nGyro Bowl $13.25  \nBeef/Lamb Gyro  \nPork Gyro Pita $16.50  \nFries & Drink ($4.00)\n\nSubtotal $42.25  \nSF Mandate (6%) $2.54  \n8.625% (8.625%) $3.64\n\n**Total** $48.43  \nMastercard 0920 (Contactless) $48.43",
+    "trueJson": {
+      "totals": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      },
+      "merchant": {
+        "name": "Nick the Greek Souvlaki & Gyro House",
+        "phone": "(415) 757-0426",
+        "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+      },
+      "line_items": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "receipt_details": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "payment": {
+        "payment_method": "Mastercard",
+        "card_last_four_digits": "0920"
+      }
+    },
+    "predictedMarkdown": null,
+    "predictedJson": {
+      "merchant": {
+        "name": "Nick the Greek",
+        "address": "121 Spear Street, Suite B08",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "phone": "(415) 757-0426",
+        "website": "www.nickthegreeksj.com"
+      },
+      "location": {
+        "city": "San Francisco",
+        "date": "2024-11-08",
+        "time": "14:16"
+      },
+      "employee": "Samantha",
+      "receipt": {
+        "ticketNumber": "17",
+        "receiptNumber": "NKZ1",
+        "authorizationCode": "CF2D4F"
+      },
+      "payment": {
+        "brand": "Mastercard",
+        "last4": "0920",
+        "type": "Contactless"
+      },
+      "lineItems": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5
+        },
+        {
+          "name": "Fries & Drink",
+          "price": 4.0
+        }
+      ],
+      "subtotal": 42.25,
+      "taxes": [
+        {
+          "name": "SF Mandate",
+          "percent": 6,
+          "amount": 2.54
+        },
+        {
+          "name": "8.625%",
+          "percent": 8.625,
+          "amount": 3.64
+        }
+      ],
+      "total": 48.43
+    },
+    "jsonAccuracy": 0.0,
+    "jsonDiff": {
+      "employee__added": "Samantha",
+      "lineItems__added": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5
+        },
+        {
+          "name": "Fries & Drink",
+          "price": 4.0
+        }
+      ],
+      "line_items__deleted": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "location__added": {
+        "city": "San Francisco",
+        "date": "2024-11-08",
+        "time": "14:16"
+      },
+      "merchant": {
+        "address": {
+          "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+          "__new": "121 Spear Street, Suite B08"
+        },
+        "city__added": "San Francisco",
+        "name": {
+          "__old": "Nick the Greek Souvlaki & Gyro House",
+          "__new": "Nick the Greek"
+        },
+        "postalCode__added": "94105",
+        "state__added": "CA",
+        "website__added": "www.nickthegreeksj.com"
+      },
+      "payment": {
+        "brand__added": "Mastercard",
+        "card_last_four_digits__deleted": "0920",
+        "last4__added": "0920",
+        "payment_method__deleted": "Mastercard",
+        "type__added": "Contactless"
+      },
+      "receipt__added": {
+        "ticketNumber": "17",
+        "receiptNumber": "NKZ1",
+        "authorizationCode": "CF2D4F"
+      },
+      "receipt_details__deleted": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "subtotal__added": 42.25,
+      "taxes__added": [
+        {
+          "name": "SF Mandate",
+          "percent": 6,
+          "amount": 2.54
+        },
+        {
+          "name": "8.625%",
+          "percent": 8.625,
+          "amount": 3.64
+        }
+      ],
+      "total__added": 48.43,
+      "totals__deleted": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      }
+    },
+    "fullJsonDiff": {
+      "employee": {
+        "__op": "+",
+        "__new": "Samantha"
+      },
+      "lineItems": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5
+          },
+          {
+            "name": "Fries & Drink",
+            "price": 4.0
+          }
+        ]
+      },
+      "line_items": {
+        "__op": "-",
+        "__old": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ]
+      },
+      "location": {
+        "__op": "+",
+        "__new": {
+          "city": "San Francisco",
+          "date": "2024-11-08",
+          "time": "14:16"
+        }
+      },
+      "merchant": {
+        "__op": "~",
+        "diff": {
+          "address": {
+            "__op": "~",
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": "121 Spear Street, Suite B08"
+          },
+          "city": {
+            "__op": "+",
+            "__new": "San Francisco"
+          },
+          "name": {
+            "__op": "~",
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick the Greek"
+          },
+          "postalCode": {
+            "__op": "+",
+            "__new": "94105"
+          },
+          "state": {
+            "__op": "+",
+            "__new": "CA"
+          },
+          "website": {
+            "__op": "+",
+            "__new": "www.nickthegreeksj.com"
+          }
+        }
+      },
+      "payment": {
+        "__op": "~",
+        "diff": {
+          "brand": {
+            "__op": "+",
+            "__new": "Mastercard"
+          },
+          "card_last_four_digits": {
+            "__op": "-",
+            "__old": "0920"
+          },
+          "last4": {
+            "__op": "+",
+            "__new": "0920"
+          },
+          "payment_method": {
+            "__op": "-",
+            "__old": "Mastercard"
+          },
+          "type": {
+            "__op": "+",
+            "__new": "Contactless"
+          }
+        }
+      },
+      "receipt": {
+        "__op": "+",
+        "__new": {
+          "ticketNumber": "17",
+          "receiptNumber": "NKZ1",
+          "authorizationCode": "CF2D4F"
+        }
+      },
+      "receipt_details": {
+        "__op": "-",
+        "__old": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        }
+      },
+      "subtotal": {
+        "__op": "+",
+        "__new": 42.25
+      },
+      "taxes": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "SF Mandate",
+            "percent": 6,
+            "amount": 2.54
+          },
+          {
+            "name": "8.625%",
+            "percent": 8.625,
+            "amount": 3.64
+          }
+        ]
+      },
+      "total": {
+        "__op": "+",
+        "__new": 48.43
+      },
+      "totals": {
+        "__op": "-",
+        "__old": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        }
+      }
+    },
+    "jsonDiffStats": {
+      "additions": 30,
+      "deletions": 14,
+      "modifications": 2,
+      "total": 46
+    },
+    "jsonAccuracyResult": {
+      "score": 0.0,
+      "jsonDiff": {
+        "employee__added": "Samantha",
+        "lineItems__added": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5
+          },
+          {
+            "name": "Fries & Drink",
+            "price": 4.0
+          }
+        ],
+        "line_items__deleted": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ],
+        "location__added": {
+          "city": "San Francisco",
+          "date": "2024-11-08",
+          "time": "14:16"
+        },
+        "merchant": {
+          "address": {
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": "121 Spear Street, Suite B08"
+          },
+          "city__added": "San Francisco",
+          "name": {
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick the Greek"
+          },
+          "postalCode__added": "94105",
+          "state__added": "CA",
+          "website__added": "www.nickthegreeksj.com"
+        },
+        "payment": {
+          "brand__added": "Mastercard",
+          "card_last_four_digits__deleted": "0920",
+          "last4__added": "0920",
+          "payment_method__deleted": "Mastercard",
+          "type__added": "Contactless"
+        },
+        "receipt__added": {
+          "ticketNumber": "17",
+          "receiptNumber": "NKZ1",
+          "authorizationCode": "CF2D4F"
+        },
+        "receipt_details__deleted": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        },
+        "subtotal__added": 42.25,
+        "taxes__added": [
+          {
+            "name": "SF Mandate",
+            "percent": 6,
+            "amount": 2.54
+          },
+          {
+            "name": "8.625%",
+            "percent": 8.625,
+            "amount": 3.64
+          }
+        ],
+        "total__added": 48.43,
+        "totals__deleted": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        }
+      },
+      "fullJsonDiff": {
+        "employee": {
+          "__op": "+",
+          "__new": "Samantha"
+        },
+        "lineItems": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "Beef/Lamb Gyro Pita",
+              "price": 12.5
+            },
+            {
+              "name": "Gyro Bowl",
+              "price": 13.25
+            },
+            {
+              "name": "Pork Gyro Pita",
+              "price": 16.5
+            },
+            {
+              "name": "Fries & Drink",
+              "price": 4.0
+            }
+          ]
+        },
+        "line_items": {
+          "__op": "-",
+          "__old": [
+            {
+              "amount": 12.5,
+              "description": "Beef/Lamb Gyro Pita"
+            },
+            {
+              "amount": 13.25,
+              "description": "Gyro Bowl"
+            },
+            {
+              "amount": 16.5,
+              "description": "Pork Gyro Pita"
+            }
+          ]
+        },
+        "location": {
+          "__op": "+",
+          "__new": {
+            "city": "San Francisco",
+            "date": "2024-11-08",
+            "time": "14:16"
+          }
+        },
+        "merchant": {
+          "__op": "~",
+          "diff": {
+            "address": {
+              "__op": "~",
+              "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+              "__new": "121 Spear Street, Suite B08"
+            },
+            "city": {
+              "__op": "+",
+              "__new": "San Francisco"
+            },
+            "name": {
+              "__op": "~",
+              "__old": "Nick the Greek Souvlaki & Gyro House",
+              "__new": "Nick the Greek"
+            },
+            "postalCode": {
+              "__op": "+",
+              "__new": "94105"
+            },
+            "state": {
+              "__op": "+",
+              "__new": "CA"
+            },
+            "website": {
+              "__op": "+",
+              "__new": "www.nickthegreeksj.com"
+            }
+          }
+        },
+        "payment": {
+          "__op": "~",
+          "diff": {
+            "brand": {
+              "__op": "+",
+              "__new": "Mastercard"
+            },
+            "card_last_four_digits": {
+              "__op": "-",
+              "__old": "0920"
+            },
+            "last4": {
+              "__op": "+",
+              "__new": "0920"
+            },
+            "payment_method": {
+              "__op": "-",
+              "__old": "Mastercard"
+            },
+            "type": {
+              "__op": "+",
+              "__new": "Contactless"
+            }
+          }
+        },
+        "receipt": {
+          "__op": "+",
+          "__new": {
+            "ticketNumber": "17",
+            "receiptNumber": "NKZ1",
+            "authorizationCode": "CF2D4F"
+          }
+        },
+        "receipt_details": {
+          "__op": "-",
+          "__old": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "receipt_number": "NKZ1"
+          }
+        },
+        "subtotal": {
+          "__op": "+",
+          "__new": 42.25
+        },
+        "taxes": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "SF Mandate",
+              "percent": 6,
+              "amount": 2.54
+            },
+            {
+              "name": "8.625%",
+              "percent": 8.625,
+              "amount": 3.64
+            }
+          ]
+        },
+        "total": {
+          "__op": "+",
+          "__new": 48.43
+        },
+        "totals": {
+          "__op": "-",
+          "__old": {
+            "tax": 6.18,
+            "total": 48.43,
+            "subtotal": 42.25
+          }
+        }
+      },
+      "jsonDiffStats": {
+        "additions": 30,
+        "deletions": 14,
+        "modifications": 2,
+        "total": 46
+      },
+      "totalFields": 17
+    },
+    "usage": {
+      "extraction": {
+        "input_tokens": 2285,
+        "input_tokens_details": "InputTokensDetails(cached_tokens=0)",
+        "output_tokens": 2670,
+        "output_tokens_details": "OutputTokensDetails(reasoning_tokens=2304)",
+        "total_tokens": 4955,
+        "duration": 90.09325609300868,
+        "inputTokens": 2285,
+        "outputTokens": 2670,
+        "totalTokens": 4955,
+        "inputCost": null,
+        "outputCost": null,
+        "totalCost": null
+      }
+    },
+    "error": null
+  },
+  {
+    "fileUrl": "https://omni-demo-data.s3.us-east-1.amazonaws.com/templates/receipt.png",
+    "metadata": {
+      "orientation": 0,
+      "documentQuality": "clean",
+      "resolution": [
+        612,
+        792
+      ],
+      "language": "EN"
+    },
+    "jsonSchema": {
+      "type": "object",
+      "required": [
+        "merchant",
+        "receipt_details",
+        "totals"
+      ],
+      "properties": {
+        "totals": {
+          "type": "object",
+          "required": [
+            "total"
+          ],
+          "properties": {
+            "tax": {
+              "type": "number",
+              "description": "Tax amount"
+            },
+            "total": {
+              "type": "number",
+              "description": "Final total amount"
+            },
+            "subtotal": {
+              "type": "number",
+              "description": "Subtotal before tax and fees"
+            }
+          },
+          "description": "Payment totals"
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Business name"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Contact phone number"
+            },
+            "address": {
+              "type": "string",
+              "description": "Store location address"
+            }
+          },
+          "description": "Basic merchant information"
+        },
+        "line_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "description",
+              "amount"
+            ],
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Price of the item"
+              },
+              "description": {
+                "type": "string",
+                "description": "Item name or description"
+              }
+            }
+          },
+          "description": "List of purchased items"
+        },
+        "receipt_details": {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Transaction date"
+            },
+            "time": {
+              "type": "string",
+              "description": "Transaction time"
+            },
+            "receipt_number": {
+              "type": "string",
+              "description": "Receipt or ticket number"
+            }
+          },
+          "description": "Transaction details"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "description": ""
+            },
+            "card_last_four_digits": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "ocrModel": "gpt-5-mini-2025-08-07",
+    "extractionModel": "gpt-5-mini-2025-08-07",
+    "directImageExtraction": true,
+    "trueMarkdown": "**NICK THE GREEK**\n\nSOUVLAKI & GYRO HOUSE\n\n**San Francisco**\n\n121 spear streeet  \nSuite B08  \nsan francisco, CA  \n94105  \n(415) 757-0426  \nwww.nickthegreeksj.com\n\nNovember 8, 2024  \n2:16 PM  \nSamantha\n\nTicket: 17  \nReceipt: NKZ1  \nAuthorization: CF2D4F\n\nMastercard  \nAID A0 00 00 00 04 10 10\n\n**TO GO**\n\nBeef/Lamb Gyro Pita $12.50  \nGyro Bowl $13.25  \nBeef/Lamb Gyro  \nPork Gyro Pita $16.50  \nFries & Drink ($4.00)\n\nSubtotal $42.25  \nSF Mandate (6%) $2.54  \n8.625% (8.625%) $3.64\n\n**Total** $48.43  \nMastercard 0920 (Contactless) $48.43",
+    "trueJson": {
+      "totals": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      },
+      "merchant": {
+        "name": "Nick the Greek Souvlaki & Gyro House",
+        "phone": "(415) 757-0426",
+        "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+      },
+      "line_items": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "receipt_details": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "payment": {
+        "payment_method": "Mastercard",
+        "card_last_four_digits": "0920"
+      }
+    },
+    "predictedMarkdown": null,
+    "predictedJson": {
+      "merchant": {
+        "name": "Nick the Greek",
+        "location": "San Francisco",
+        "address": "121 spear streeet",
+        "suite": "Suite B08",
+        "city": "san francisco",
+        "state": "CA",
+        "zip": "94105",
+        "phone": "(415) 757-0426",
+        "website": "www.nickthegreeksj.com"
+      },
+      "transaction": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "server": "Samantha",
+        "ticket": "17",
+        "receipt": "NKZ1",
+        "authorization": "CF2D4F"
+      },
+      "payment": {
+        "method": "Mastercard",
+        "aid": "A0 00 00 00 04 10 10",
+        "card_last4": "0920",
+        "contactless": true,
+        "amount": 48.43
+      },
+      "items": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "description": "Beef/Lamb Gyro"
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "modifier": {
+            "name": "Fries & Drink",
+            "price": 4.0,
+            "note": "($4.00)",
+            "included_in_price": false
+          }
+        }
+      ],
+      "subtotal": 42.25,
+      "taxes": [
+        {
+          "name": "SF Mandate",
+          "rate": "6%",
+          "amount": 2.54
+        },
+        {
+          "name": "Sales Tax",
+          "rate": "8.625%",
+          "amount": 3.64
+        }
+      ],
+      "total": 48.43
+    },
+    "jsonAccuracy": 0.0,
+    "jsonDiff": {
+      "items__added": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "description": "Beef/Lamb Gyro"
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "modifier": {
+            "name": "Fries & Drink",
+            "price": 4.0,
+            "note": "($4.00)",
+            "included_in_price": false
+          }
+        }
+      ],
+      "line_items__deleted": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "merchant": {
+        "address": {
+          "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+          "__new": "121 spear streeet"
+        },
+        "city__added": "san francisco",
+        "location__added": "San Francisco",
+        "name": {
+          "__old": "Nick the Greek Souvlaki & Gyro House",
+          "__new": "Nick the Greek"
+        },
+        "state__added": "CA",
+        "suite__added": "Suite B08",
+        "website__added": "www.nickthegreeksj.com",
+        "zip__added": "94105"
+      },
+      "payment": {
+        "aid__added": "A0 00 00 00 04 10 10",
+        "amount__added": 48.43,
+        "card_last4__added": "0920",
+        "card_last_four_digits__deleted": "0920",
+        "contactless__added": true,
+        "method__added": "Mastercard",
+        "payment_method__deleted": "Mastercard"
+      },
+      "receipt_details__deleted": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "subtotal__added": 42.25,
+      "taxes__added": [
+        {
+          "name": "SF Mandate",
+          "rate": "6%",
+          "amount": 2.54
+        },
+        {
+          "name": "Sales Tax",
+          "rate": "8.625%",
+          "amount": 3.64
+        }
+      ],
+      "total__added": 48.43,
+      "totals__deleted": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      },
+      "transaction__added": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "server": "Samantha",
+        "ticket": "17",
+        "receipt": "NKZ1",
+        "authorization": "CF2D4F"
+      }
+    },
+    "fullJsonDiff": {
+      "items": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "description": "Beef/Lamb Gyro"
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "modifier": {
+              "name": "Fries & Drink",
+              "price": 4.0,
+              "note": "($4.00)",
+              "included_in_price": false
+            }
+          }
+        ]
+      },
+      "line_items": {
+        "__op": "-",
+        "__old": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ]
+      },
+      "merchant": {
+        "__op": "~",
+        "diff": {
+          "address": {
+            "__op": "~",
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": "121 spear streeet"
+          },
+          "city": {
+            "__op": "+",
+            "__new": "san francisco"
+          },
+          "location": {
+            "__op": "+",
+            "__new": "San Francisco"
+          },
+          "name": {
+            "__op": "~",
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick the Greek"
+          },
+          "state": {
+            "__op": "+",
+            "__new": "CA"
+          },
+          "suite": {
+            "__op": "+",
+            "__new": "Suite B08"
+          },
+          "website": {
+            "__op": "+",
+            "__new": "www.nickthegreeksj.com"
+          },
+          "zip": {
+            "__op": "+",
+            "__new": "94105"
+          }
+        }
+      },
+      "payment": {
+        "__op": "~",
+        "diff": {
+          "aid": {
+            "__op": "+",
+            "__new": "A0 00 00 00 04 10 10"
+          },
+          "amount": {
+            "__op": "+",
+            "__new": 48.43
+          },
+          "card_last4": {
+            "__op": "+",
+            "__new": "0920"
+          },
+          "card_last_four_digits": {
+            "__op": "-",
+            "__old": "0920"
+          },
+          "contactless": {
+            "__op": "+",
+            "__new": true
+          },
+          "method": {
+            "__op": "+",
+            "__new": "Mastercard"
+          },
+          "payment_method": {
+            "__op": "-",
+            "__old": "Mastercard"
+          }
+        }
+      },
+      "receipt_details": {
+        "__op": "-",
+        "__old": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        }
+      },
+      "subtotal": {
+        "__op": "+",
+        "__new": 42.25
+      },
+      "taxes": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "SF Mandate",
+            "rate": "6%",
+            "amount": 2.54
+          },
+          {
+            "name": "Sales Tax",
+            "rate": "8.625%",
+            "amount": 3.64
+          }
+        ]
+      },
+      "total": {
+        "__op": "+",
+        "__new": 48.43
+      },
+      "totals": {
+        "__op": "-",
+        "__old": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        }
+      },
+      "transaction": {
+        "__op": "+",
+        "__new": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "server": "Samantha",
+          "ticket": "17",
+          "receipt": "NKZ1",
+          "authorization": "CF2D4F"
+        }
+      }
+    },
+    "jsonDiffStats": {
+      "additions": 36,
+      "deletions": 14,
+      "modifications": 2,
+      "total": 52
+    },
+    "jsonAccuracyResult": {
+      "score": 0.0,
+      "jsonDiff": {
+        "items__added": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "description": "Beef/Lamb Gyro"
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "modifier": {
+              "name": "Fries & Drink",
+              "price": 4.0,
+              "note": "($4.00)",
+              "included_in_price": false
+            }
+          }
+        ],
+        "line_items__deleted": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ],
+        "merchant": {
+          "address": {
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": "121 spear streeet"
+          },
+          "city__added": "san francisco",
+          "location__added": "San Francisco",
+          "name": {
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick the Greek"
+          },
+          "state__added": "CA",
+          "suite__added": "Suite B08",
+          "website__added": "www.nickthegreeksj.com",
+          "zip__added": "94105"
+        },
+        "payment": {
+          "aid__added": "A0 00 00 00 04 10 10",
+          "amount__added": 48.43,
+          "card_last4__added": "0920",
+          "card_last_four_digits__deleted": "0920",
+          "contactless__added": true,
+          "method__added": "Mastercard",
+          "payment_method__deleted": "Mastercard"
+        },
+        "receipt_details__deleted": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        },
+        "subtotal__added": 42.25,
+        "taxes__added": [
+          {
+            "name": "SF Mandate",
+            "rate": "6%",
+            "amount": 2.54
+          },
+          {
+            "name": "Sales Tax",
+            "rate": "8.625%",
+            "amount": 3.64
+          }
+        ],
+        "total__added": 48.43,
+        "totals__deleted": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        },
+        "transaction__added": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "server": "Samantha",
+          "ticket": "17",
+          "receipt": "NKZ1",
+          "authorization": "CF2D4F"
+        }
+      },
+      "fullJsonDiff": {
+        "items": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "Beef/Lamb Gyro Pita",
+              "price": 12.5
+            },
+            {
+              "name": "Gyro Bowl",
+              "price": 13.25,
+              "description": "Beef/Lamb Gyro"
+            },
+            {
+              "name": "Pork Gyro Pita",
+              "price": 16.5,
+              "modifier": {
+                "name": "Fries & Drink",
+                "price": 4.0,
+                "note": "($4.00)",
+                "included_in_price": false
+              }
+            }
+          ]
+        },
+        "line_items": {
+          "__op": "-",
+          "__old": [
+            {
+              "amount": 12.5,
+              "description": "Beef/Lamb Gyro Pita"
+            },
+            {
+              "amount": 13.25,
+              "description": "Gyro Bowl"
+            },
+            {
+              "amount": 16.5,
+              "description": "Pork Gyro Pita"
+            }
+          ]
+        },
+        "merchant": {
+          "__op": "~",
+          "diff": {
+            "address": {
+              "__op": "~",
+              "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+              "__new": "121 spear streeet"
+            },
+            "city": {
+              "__op": "+",
+              "__new": "san francisco"
+            },
+            "location": {
+              "__op": "+",
+              "__new": "San Francisco"
+            },
+            "name": {
+              "__op": "~",
+              "__old": "Nick the Greek Souvlaki & Gyro House",
+              "__new": "Nick the Greek"
+            },
+            "state": {
+              "__op": "+",
+              "__new": "CA"
+            },
+            "suite": {
+              "__op": "+",
+              "__new": "Suite B08"
+            },
+            "website": {
+              "__op": "+",
+              "__new": "www.nickthegreeksj.com"
+            },
+            "zip": {
+              "__op": "+",
+              "__new": "94105"
+            }
+          }
+        },
+        "payment": {
+          "__op": "~",
+          "diff": {
+            "aid": {
+              "__op": "+",
+              "__new": "A0 00 00 00 04 10 10"
+            },
+            "amount": {
+              "__op": "+",
+              "__new": 48.43
+            },
+            "card_last4": {
+              "__op": "+",
+              "__new": "0920"
+            },
+            "card_last_four_digits": {
+              "__op": "-",
+              "__old": "0920"
+            },
+            "contactless": {
+              "__op": "+",
+              "__new": true
+            },
+            "method": {
+              "__op": "+",
+              "__new": "Mastercard"
+            },
+            "payment_method": {
+              "__op": "-",
+              "__old": "Mastercard"
+            }
+          }
+        },
+        "receipt_details": {
+          "__op": "-",
+          "__old": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "receipt_number": "NKZ1"
+          }
+        },
+        "subtotal": {
+          "__op": "+",
+          "__new": 42.25
+        },
+        "taxes": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "SF Mandate",
+              "rate": "6%",
+              "amount": 2.54
+            },
+            {
+              "name": "Sales Tax",
+              "rate": "8.625%",
+              "amount": 3.64
+            }
+          ]
+        },
+        "total": {
+          "__op": "+",
+          "__new": 48.43
+        },
+        "totals": {
+          "__op": "-",
+          "__old": {
+            "tax": 6.18,
+            "total": 48.43,
+            "subtotal": 42.25
+          }
+        },
+        "transaction": {
+          "__op": "+",
+          "__new": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "server": "Samantha",
+            "ticket": "17",
+            "receipt": "NKZ1",
+            "authorization": "CF2D4F"
+          }
+        }
+      },
+      "jsonDiffStats": {
+        "additions": 36,
+        "deletions": 14,
+        "modifications": 2,
+        "total": 52
+      },
+      "totalFields": 17
+    },
+    "usage": {
+      "extraction": {
+        "input_tokens": 1837,
+        "input_tokens_details": "InputTokensDetails(cached_tokens=0)",
+        "output_tokens": 1666,
+        "output_tokens_details": "OutputTokensDetails(reasoning_tokens=1216)",
+        "total_tokens": 3503,
+        "duration": 110.18390697200084,
+        "inputTokens": 1837,
+        "outputTokens": 1666,
+        "totalTokens": 3503,
+        "inputCost": null,
+        "outputCost": null,
+        "totalCost": null
+      }
+    },
+    "error": null
+  },
+  {
+    "fileUrl": "https://omni-demo-data.s3.us-east-1.amazonaws.com/templates/receipt.png",
+    "metadata": {
+      "orientation": 0,
+      "documentQuality": "clean",
+      "resolution": [
+        612,
+        792
+      ],
+      "language": "EN"
+    },
+    "jsonSchema": {
+      "type": "object",
+      "required": [
+        "merchant",
+        "receipt_details",
+        "totals"
+      ],
+      "properties": {
+        "totals": {
+          "type": "object",
+          "required": [
+            "total"
+          ],
+          "properties": {
+            "tax": {
+              "type": "number",
+              "description": "Tax amount"
+            },
+            "total": {
+              "type": "number",
+              "description": "Final total amount"
+            },
+            "subtotal": {
+              "type": "number",
+              "description": "Subtotal before tax and fees"
+            }
+          },
+          "description": "Payment totals"
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Business name"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Contact phone number"
+            },
+            "address": {
+              "type": "string",
+              "description": "Store location address"
+            }
+          },
+          "description": "Basic merchant information"
+        },
+        "line_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "description",
+              "amount"
+            ],
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Price of the item"
+              },
+              "description": {
+                "type": "string",
+                "description": "Item name or description"
+              }
+            }
+          },
+          "description": "List of purchased items"
+        },
+        "receipt_details": {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Transaction date"
+            },
+            "time": {
+              "type": "string",
+              "description": "Transaction time"
+            },
+            "receipt_number": {
+              "type": "string",
+              "description": "Receipt or ticket number"
+            }
+          },
+          "description": "Transaction details"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "description": ""
+            },
+            "card_last_four_digits": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+      }
+    },
+    "ocrModel": "gpt-5-2025-08-07",
+    "extractionModel": "gpt-5-2025-08-07",
+    "directImageExtraction": true,
+    "trueMarkdown": "**NICK THE GREEK**\n\nSOUVLAKI & GYRO HOUSE\n\n**San Francisco**\n\n121 spear streeet  \nSuite B08  \nsan francisco, CA  \n94105  \n(415) 757-0426  \nwww.nickthegreeksj.com\n\nNovember 8, 2024  \n2:16 PM  \nSamantha\n\nTicket: 17  \nReceipt: NKZ1  \nAuthorization: CF2D4F\n\nMastercard  \nAID A0 00 00 00 04 10 10\n\n**TO GO**\n\nBeef/Lamb Gyro Pita $12.50  \nGyro Bowl $13.25  \nBeef/Lamb Gyro  \nPork Gyro Pita $16.50  \nFries & Drink ($4.00)\n\nSubtotal $42.25  \nSF Mandate (6%) $2.54  \n8.625% (8.625%) $3.64\n\n**Total** $48.43  \nMastercard 0920 (Contactless) $48.43",
+    "trueJson": {
+      "totals": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      },
+      "merchant": {
+        "name": "Nick the Greek Souvlaki & Gyro House",
+        "phone": "(415) 757-0426",
+        "address": "121 Spear Street, Suite B08, San Francisco, CA 94105"
+      },
+      "line_items": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "receipt_details": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "payment": {
+        "payment_method": "Mastercard",
+        "card_last_four_digits": "0920"
+      }
+    },
+    "predictedMarkdown": null,
+    "predictedJson": {
+      "merchant": {
+        "name": "Nick The Greek",
+        "location": "San Francisco",
+        "address": {
+          "line1": "121 spear streeet",
+          "line2": "Suite B08",
+          "city": "san francisco",
+          "state": "CA",
+          "postal_code": "94105"
+        },
+        "phone": "(415) 757-0426",
+        "website": "www.nickthegreeksj.com"
+      },
+      "date": "November 8, 2024",
+      "time": "2:16 PM",
+      "server": "Samantha",
+      "ticket": "17",
+      "receipt_id": "NK21",
+      "authorization": "CF2D4F",
+      "payment": {
+        "method": "Mastercard",
+        "entry": "Contactless",
+        "card_last4": "0920",
+        "aid": "A0000000041010"
+      },
+      "order_type": "TO GO",
+      "items": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5,
+          "quantity": 1
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "quantity": 1,
+          "modifiers": [
+            "Beef/Lamb Gyro"
+          ]
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "quantity": 1,
+          "modifiers": [
+            "Fries & Drink ($4.00)"
+          ]
+        }
+      ],
+      "subtotal": 42.25,
+      "taxes": [
+        {
+          "name": "SF Mandate",
+          "rate": 0.06,
+          "amount": 2.54
+        },
+        {
+          "name": "Sales Tax",
+          "rate": 0.08625,
+          "amount": 3.64
+        }
+      ],
+      "total": 48.43,
+      "currency": "USD",
+      "card_summary": "Mastercard 0920 (Contactless) $48.43"
+    },
+    "jsonAccuracy": 0.0,
+    "jsonDiff": {
+      "authorization__added": "CF2D4F",
+      "card_summary__added": "Mastercard 0920 (Contactless) $48.43",
+      "currency__added": "USD",
+      "date__added": "November 8, 2024",
+      "items__added": [
+        {
+          "name": "Beef/Lamb Gyro Pita",
+          "price": 12.5,
+          "quantity": 1
+        },
+        {
+          "name": "Gyro Bowl",
+          "price": 13.25,
+          "quantity": 1,
+          "modifiers": [
+            "Beef/Lamb Gyro"
+          ]
+        },
+        {
+          "name": "Pork Gyro Pita",
+          "price": 16.5,
+          "quantity": 1,
+          "modifiers": [
+            "Fries & Drink ($4.00)"
+          ]
+        }
+      ],
+      "line_items__deleted": [
+        {
+          "amount": 12.5,
+          "description": "Beef/Lamb Gyro Pita"
+        },
+        {
+          "amount": 13.25,
+          "description": "Gyro Bowl"
+        },
+        {
+          "amount": 16.5,
+          "description": "Pork Gyro Pita"
+        }
+      ],
+      "merchant": {
+        "address": {
+          "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+          "__new": {
+            "line1": "121 spear streeet",
+            "line2": "Suite B08",
+            "city": "san francisco",
+            "state": "CA",
+            "postal_code": "94105"
+          }
+        },
+        "location__added": "San Francisco",
+        "name": {
+          "__old": "Nick the Greek Souvlaki & Gyro House",
+          "__new": "Nick The Greek"
+        },
+        "website__added": "www.nickthegreeksj.com"
+      },
+      "order_type__added": "TO GO",
+      "payment": {
+        "aid__added": "A0000000041010",
+        "card_last4__added": "0920",
+        "card_last_four_digits__deleted": "0920",
+        "entry__added": "Contactless",
+        "method__added": "Mastercard",
+        "payment_method__deleted": "Mastercard"
+      },
+      "receipt_details__deleted": {
+        "date": "November 8, 2024",
+        "time": "2:16 PM",
+        "receipt_number": "NKZ1"
+      },
+      "receipt_id__added": "NK21",
+      "server__added": "Samantha",
+      "subtotal__added": 42.25,
+      "taxes__added": [
+        {
+          "name": "SF Mandate",
+          "rate": 0.06,
+          "amount": 2.54
+        },
+        {
+          "name": "Sales Tax",
+          "rate": 0.08625,
+          "amount": 3.64
+        }
+      ],
+      "ticket__added": "17",
+      "time__added": "2:16 PM",
+      "total__added": 48.43,
+      "totals__deleted": {
+        "tax": 6.18,
+        "total": 48.43,
+        "subtotal": 42.25
+      }
+    },
+    "fullJsonDiff": {
+      "authorization": {
+        "__op": "+",
+        "__new": "CF2D4F"
+      },
+      "card_summary": {
+        "__op": "+",
+        "__new": "Mastercard 0920 (Contactless) $48.43"
+      },
+      "currency": {
+        "__op": "+",
+        "__new": "USD"
+      },
+      "date": {
+        "__op": "+",
+        "__new": "November 8, 2024"
+      },
+      "items": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5,
+            "quantity": 1
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "quantity": 1,
+            "modifiers": [
+              "Beef/Lamb Gyro"
+            ]
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "quantity": 1,
+            "modifiers": [
+              "Fries & Drink ($4.00)"
+            ]
+          }
+        ]
+      },
+      "line_items": {
+        "__op": "-",
+        "__old": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ]
+      },
+      "merchant": {
+        "__op": "~",
+        "diff": {
+          "address": {
+            "__op": "~",
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": {
+              "line1": "121 spear streeet",
+              "line2": "Suite B08",
+              "city": "san francisco",
+              "state": "CA",
+              "postal_code": "94105"
+            }
+          },
+          "location": {
+            "__op": "+",
+            "__new": "San Francisco"
+          },
+          "name": {
+            "__op": "~",
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick The Greek"
+          },
+          "website": {
+            "__op": "+",
+            "__new": "www.nickthegreeksj.com"
+          }
+        }
+      },
+      "order_type": {
+        "__op": "+",
+        "__new": "TO GO"
+      },
+      "payment": {
+        "__op": "~",
+        "diff": {
+          "aid": {
+            "__op": "+",
+            "__new": "A0000000041010"
+          },
+          "card_last4": {
+            "__op": "+",
+            "__new": "0920"
+          },
+          "card_last_four_digits": {
+            "__op": "-",
+            "__old": "0920"
+          },
+          "entry": {
+            "__op": "+",
+            "__new": "Contactless"
+          },
+          "method": {
+            "__op": "+",
+            "__new": "Mastercard"
+          },
+          "payment_method": {
+            "__op": "-",
+            "__old": "Mastercard"
+          }
+        }
+      },
+      "receipt_details": {
+        "__op": "-",
+        "__old": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        }
+      },
+      "receipt_id": {
+        "__op": "+",
+        "__new": "NK21"
+      },
+      "server": {
+        "__op": "+",
+        "__new": "Samantha"
+      },
+      "subtotal": {
+        "__op": "+",
+        "__new": 42.25
+      },
+      "taxes": {
+        "__op": "+",
+        "__new": [
+          {
+            "name": "SF Mandate",
+            "rate": 0.06,
+            "amount": 2.54
+          },
+          {
+            "name": "Sales Tax",
+            "rate": 0.08625,
+            "amount": 3.64
+          }
+        ]
+      },
+      "ticket": {
+        "__op": "+",
+        "__new": "17"
+      },
+      "time": {
+        "__op": "+",
+        "__new": "2:16 PM"
+      },
+      "total": {
+        "__op": "+",
+        "__new": 48.43
+      },
+      "totals": {
+        "__op": "-",
+        "__old": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        }
+      }
+    },
+    "jsonDiffStats": {
+      "additions": 34,
+      "deletions": 14,
+      "modifications": 2,
+      "total": 50
+    },
+    "jsonAccuracyResult": {
+      "score": 0.0,
+      "jsonDiff": {
+        "authorization__added": "CF2D4F",
+        "card_summary__added": "Mastercard 0920 (Contactless) $48.43",
+        "currency__added": "USD",
+        "date__added": "November 8, 2024",
+        "items__added": [
+          {
+            "name": "Beef/Lamb Gyro Pita",
+            "price": 12.5,
+            "quantity": 1
+          },
+          {
+            "name": "Gyro Bowl",
+            "price": 13.25,
+            "quantity": 1,
+            "modifiers": [
+              "Beef/Lamb Gyro"
+            ]
+          },
+          {
+            "name": "Pork Gyro Pita",
+            "price": 16.5,
+            "quantity": 1,
+            "modifiers": [
+              "Fries & Drink ($4.00)"
+            ]
+          }
+        ],
+        "line_items__deleted": [
+          {
+            "amount": 12.5,
+            "description": "Beef/Lamb Gyro Pita"
+          },
+          {
+            "amount": 13.25,
+            "description": "Gyro Bowl"
+          },
+          {
+            "amount": 16.5,
+            "description": "Pork Gyro Pita"
+          }
+        ],
+        "merchant": {
+          "address": {
+            "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+            "__new": {
+              "line1": "121 spear streeet",
+              "line2": "Suite B08",
+              "city": "san francisco",
+              "state": "CA",
+              "postal_code": "94105"
+            }
+          },
+          "location__added": "San Francisco",
+          "name": {
+            "__old": "Nick the Greek Souvlaki & Gyro House",
+            "__new": "Nick The Greek"
+          },
+          "website__added": "www.nickthegreeksj.com"
+        },
+        "order_type__added": "TO GO",
+        "payment": {
+          "aid__added": "A0000000041010",
+          "card_last4__added": "0920",
+          "card_last_four_digits__deleted": "0920",
+          "entry__added": "Contactless",
+          "method__added": "Mastercard",
+          "payment_method__deleted": "Mastercard"
+        },
+        "receipt_details__deleted": {
+          "date": "November 8, 2024",
+          "time": "2:16 PM",
+          "receipt_number": "NKZ1"
+        },
+        "receipt_id__added": "NK21",
+        "server__added": "Samantha",
+        "subtotal__added": 42.25,
+        "taxes__added": [
+          {
+            "name": "SF Mandate",
+            "rate": 0.06,
+            "amount": 2.54
+          },
+          {
+            "name": "Sales Tax",
+            "rate": 0.08625,
+            "amount": 3.64
+          }
+        ],
+        "ticket__added": "17",
+        "time__added": "2:16 PM",
+        "total__added": 48.43,
+        "totals__deleted": {
+          "tax": 6.18,
+          "total": 48.43,
+          "subtotal": 42.25
+        }
+      },
+      "fullJsonDiff": {
+        "authorization": {
+          "__op": "+",
+          "__new": "CF2D4F"
+        },
+        "card_summary": {
+          "__op": "+",
+          "__new": "Mastercard 0920 (Contactless) $48.43"
+        },
+        "currency": {
+          "__op": "+",
+          "__new": "USD"
+        },
+        "date": {
+          "__op": "+",
+          "__new": "November 8, 2024"
+        },
+        "items": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "Beef/Lamb Gyro Pita",
+              "price": 12.5,
+              "quantity": 1
+            },
+            {
+              "name": "Gyro Bowl",
+              "price": 13.25,
+              "quantity": 1,
+              "modifiers": [
+                "Beef/Lamb Gyro"
+              ]
+            },
+            {
+              "name": "Pork Gyro Pita",
+              "price": 16.5,
+              "quantity": 1,
+              "modifiers": [
+                "Fries & Drink ($4.00)"
+              ]
+            }
+          ]
+        },
+        "line_items": {
+          "__op": "-",
+          "__old": [
+            {
+              "amount": 12.5,
+              "description": "Beef/Lamb Gyro Pita"
+            },
+            {
+              "amount": 13.25,
+              "description": "Gyro Bowl"
+            },
+            {
+              "amount": 16.5,
+              "description": "Pork Gyro Pita"
+            }
+          ]
+        },
+        "merchant": {
+          "__op": "~",
+          "diff": {
+            "address": {
+              "__op": "~",
+              "__old": "121 Spear Street, Suite B08, San Francisco, CA 94105",
+              "__new": {
+                "line1": "121 spear streeet",
+                "line2": "Suite B08",
+                "city": "san francisco",
+                "state": "CA",
+                "postal_code": "94105"
+              }
+            },
+            "location": {
+              "__op": "+",
+              "__new": "San Francisco"
+            },
+            "name": {
+              "__op": "~",
+              "__old": "Nick the Greek Souvlaki & Gyro House",
+              "__new": "Nick The Greek"
+            },
+            "website": {
+              "__op": "+",
+              "__new": "www.nickthegreeksj.com"
+            }
+          }
+        },
+        "order_type": {
+          "__op": "+",
+          "__new": "TO GO"
+        },
+        "payment": {
+          "__op": "~",
+          "diff": {
+            "aid": {
+              "__op": "+",
+              "__new": "A0000000041010"
+            },
+            "card_last4": {
+              "__op": "+",
+              "__new": "0920"
+            },
+            "card_last_four_digits": {
+              "__op": "-",
+              "__old": "0920"
+            },
+            "entry": {
+              "__op": "+",
+              "__new": "Contactless"
+            },
+            "method": {
+              "__op": "+",
+              "__new": "Mastercard"
+            },
+            "payment_method": {
+              "__op": "-",
+              "__old": "Mastercard"
+            }
+          }
+        },
+        "receipt_details": {
+          "__op": "-",
+          "__old": {
+            "date": "November 8, 2024",
+            "time": "2:16 PM",
+            "receipt_number": "NKZ1"
+          }
+        },
+        "receipt_id": {
+          "__op": "+",
+          "__new": "NK21"
+        },
+        "server": {
+          "__op": "+",
+          "__new": "Samantha"
+        },
+        "subtotal": {
+          "__op": "+",
+          "__new": 42.25
+        },
+        "taxes": {
+          "__op": "+",
+          "__new": [
+            {
+              "name": "SF Mandate",
+              "rate": 0.06,
+              "amount": 2.54
+            },
+            {
+              "name": "Sales Tax",
+              "rate": 0.08625,
+              "amount": 3.64
+            }
+          ]
+        },
+        "ticket": {
+          "__op": "+",
+          "__new": "17"
+        },
+        "time": {
+          "__op": "+",
+          "__new": "2:16 PM"
+        },
+        "total": {
+          "__op": "+",
+          "__new": 48.43
+        },
+        "totals": {
+          "__op": "-",
+          "__old": {
+            "tax": 6.18,
+            "total": 48.43,
+            "subtotal": 42.25
+          }
+        }
+      },
+      "jsonDiffStats": {
+        "additions": 34,
+        "deletions": 14,
+        "modifications": 2,
+        "total": 50
+      },
+      "totalFields": 17
+    },
+    "usage": {
+      "extraction": {
+        "input_tokens": 671,
+        "input_tokens_details": "InputTokensDetails(cached_tokens=0)",
+        "output_tokens": 3165,
+        "output_tokens_details": "OutputTokensDetails(reasoning_tokens=2688)",
+        "total_tokens": 3836,
+        "duration": 147.84886660100892,
+        "inputTokens": 671,
+        "outputTokens": 3165,
+        "totalTokens": 3836,
+        "inputCost": null,
+        "outputCost": null,
+        "totalCost": null
+      }
+    },
+    "error": null
+  }
+]

@@ -1,0 +1,2 @@
+Extract the following JSON schema from the image.
+Return only the JSON with no explanation text.
