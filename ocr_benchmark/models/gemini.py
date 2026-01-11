@@ -143,19 +143,9 @@ class Gemini(BaseModel):
             data = await asyncio.to_thread(_fetch_bytes, image_path)
 
             # Create an image input based on SDK's types when available
-            image_part = None
-            try:
-                image_part = types.Part.from_bytes(
-                    content=data, mime_type=get_mime_type(image_path)
-                )
-            except Exception:
-                # Fall back to a simple dict if types.ImageInput isn't available
-                image_part = {
-                    "inlineData": {
-                        "type_data": type(data).__name__,
-                        "mimeType": get_mime_type(image_path),
-                    }
-                }
+            image_part = types.Part.from_bytes(
+                data=data, mime_type=get_mime_type(image_path)
+            )
 
             self.config.system_instruction = OCR_SYSTEM_PROMPT
             response = await asyncio.to_thread(
@@ -165,37 +155,8 @@ class Gemini(BaseModel):
             )
 
             # Extract text from known response shapes
-            text = None
-            usage = {}
-            try:
-                # common pattern: response.output or response.text()
-                if hasattr(response, "text"):
-                    text = response.text()
-                elif hasattr(response, "output"):
-                    # output may be a list of candidates
-                    out = response.output
-                    if isinstance(out, (list, tuple)) and len(out) > 0:
-                        text = getattr(out[0], "content", str(out[0]))
-                    else:
-                        text = str(out)
-                elif hasattr(response, "candidates"):
-                    text = getattr(
-                        response.candidates[0], "content", str(response.candidates[0])
-                    )
-                else:
-                    text = str(response)
-
-                # try to find usage metadata if present
-                if hasattr(response, "usage"):
-                    usage = dict(response.usage)
-                elif hasattr(response, "response") and hasattr(
-                    response.response, "usage"
-                ):
-                    usage = dict(response.response.usage)
-                elif hasattr(response, "metadata"):
-                    usage = dict(response.metadata)
-            except Exception:
-                usage = {}
+            text = response.text if response.text else str(response)
+            usage = dict(response.usage_metadata) if response.usage_metadata else {}
 
             end = time.perf_counter()
 
@@ -222,7 +183,7 @@ class Gemini(BaseModel):
 
             return {
                 "text": text,
-                "usage": merged_usage,
+                "usage": merged_usage, # pyright: ignore[reportReturnType]
             }
         except Exception as e:
             print("Gemini OCR error:", e)
@@ -230,21 +191,10 @@ class Gemini(BaseModel):
             raise
 
     async def extract_from_text(
-        self, text: Any, schema: Dict[str, Any]
+        self, text: Any, schema: Dict[str, Any], imageBase64s=None
     ) -> ExtractionResult:
         t0 = time.perf_counter()
         filtered_schema = self.convert_schema_for_gemini(schema)
-
-        gen_kwargs = {"temperature": 0}
-        try:
-            gen_kwargs.update(
-                {
-                    "response_mime_type": "application/json",
-                    "response_schema": filtered_schema,
-                }
-            )
-        except Exception:
-            pass
 
         self.config.response_schema = filtered_schema
         self.config.system_instruction = JSON_EXTRACTION_SYSTEM_PROMPT
@@ -257,27 +207,12 @@ class Gemini(BaseModel):
                 )
             )
 
-            jtext = None
-            if hasattr(response, "text"):
-                jtext = response.text()
-            elif hasattr(response, "output"):
-                out = response.output
-                if isinstance(out, (list, tuple)) and len(out) > 0:
-                    jtext = getattr(out[0], "content", str(out[0]))
-                else:
-                    jtext = str(out)
-            else:
-                jtext = str(response)
+            jtext = response.text if response.text else str(response)
 
             json_obj = json.loads(jtext)
             end = time.perf_counter()
 
-            usage = {}
-            if hasattr(response, "usage"):
-                try:
-                    usage = dict(response.usage)
-                except Exception:
-                    usage = {}
+            usage = dict(response.usage_metadata) if response.usage_metadata else {}
 
             duration = end - t0
 
@@ -301,7 +236,7 @@ class Gemini(BaseModel):
 
             merged_usage = {**usage, **usage_payload}
 
-            return {"json": json_obj, "usage": merged_usage}
+            return {"json": json_obj, "usage": merged_usage} # pyright: ignore[reportReturnType]
         except Exception as e:
             print("Gemini extract_from_text error:", e)
             print(traceback.format_exc())
@@ -322,15 +257,9 @@ class Gemini(BaseModel):
         try:
             data = await asyncio.to_thread(_fetch_bytes, image_path)
 
-            image_part = None
-            try:
-                image_part = types.Part.from_bytes(
-                    content=data, mime_type=get_mime_type(image_path)
-                )
-            except Exception:
-                image_part = {
-                    "inlineData": {"data": data, "mimeType": get_mime_type(image_path)}
-                }
+            image_part = types.Part.from_bytes(
+                data=data, mime_type=get_mime_type(image_path)
+            )
 
             filtered_schema = self.convert_schema_for_gemini(schema)
 
@@ -344,12 +273,12 @@ class Gemini(BaseModel):
                 )
             )
 
-            jtext = response.text
+            jtext = response.text if response.text else str(response)
 
             json_obj = json.loads(jtext)
             end = time.perf_counter()
 
-            usage = dict(response.usage_metadata)
+            usage = dict(response.usage_metadata) if response.usage_metadata else {}
 
             duration = end - t0
 
@@ -373,7 +302,7 @@ class Gemini(BaseModel):
 
             merged_usage = {**usage, **usage_payload}
 
-            return {"json": json_obj, "usage": merged_usage}
+            return {"json": json_obj, "usage": merged_usage} # pyright: ignore[reportReturnType]
         except Exception as e:
             print("Gemini extract_from_image error:", e)
             print(traceback.format_exc())

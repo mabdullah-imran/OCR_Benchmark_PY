@@ -8,7 +8,7 @@ that mirrors the TypeScript `ModelProvider` interface, plus a
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
+from typing import Any, Dict, List, Protocol, runtime_checkable
 from ..types.model import ExtractionResult
 
 
@@ -20,7 +20,7 @@ class BaseModel(ABC):
     extraction-capable providers.
     """
 
-    def __init__(self, model: str, output_dir: Optional[str] = None):
+    def __init__(self, model: str, output_dir: str | None):
         self.model = model
         self.output_dir = output_dir
 
@@ -39,7 +39,7 @@ class BaseModel(ABC):
         self,
         text: str,
         schema: Dict[str, Any],
-        imageBase64s: Optional[List[str]] = None,
+        imageBase64s: List[str] | None = None,
     ) -> ExtractionResult:
         """Optional: produce JSON from text + schema.
 
@@ -74,7 +74,7 @@ class ModelProviderProtocol(Protocol):
     """
 
     model: str
-    output_dir: Optional[str]
+    output_dir: str | None
 
     async def ocr(self, image_path: str) -> ExtractionResult: ...
 
@@ -82,7 +82,7 @@ class ModelProviderProtocol(Protocol):
         self,
         text: str,
         schema: Dict[str, Any],
-        imageBase64s: Optional[List[str]] = None,
+        imageBase64s: List[str] | None = None,
     ) -> ExtractionResult: ...
 
     async def extract_from_image(

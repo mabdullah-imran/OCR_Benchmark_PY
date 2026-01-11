@@ -5,7 +5,7 @@ import json
 
 def create_result_folder(folder_name: str) -> Path:
     """Create a results folder at the repository's `results/<folder_name>` path and return it."""
-    results_folder = Path(__file__).resolve().parents[1] / "results"
+    results_folder = Path(__file__).resolve().parents[2] / "results"
     results_folder.mkdir(parents=True, exist_ok=True)
 
     folder_path = results_folder / folder_name
