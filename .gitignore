@@ -1,5 +1,5 @@
 # Dependencies and build artifacts
-/__pycache__
+*/__pycache__
 *.pyc
 
 # Configuration and credentials
@@ -15,3 +15,6 @@ scripts
 
 # System files
 .DS_Store
+
+# Python Package files
+*.egg-info/
