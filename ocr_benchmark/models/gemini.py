@@ -35,54 +35,22 @@ def _extract_token_counts(response: Any) -> tuple[int, int]:
     """Return (input_tokens, output_tokens) as ints (defaults to 0).
 
     The GenAI Python SDK has varied response shapes; try a few common
-    locations (response.response.usageMetadata, response.usage, response.metadata).
+    locations (response.usageMetadata, response.usage, response.metadata).
     """
-    input_tokens = None
-    output_tokens = None
+    meta = response.usage_metadata
+    input_tokens = getattr(meta, "promptTokenCount", None) or getattr(
+        meta, "prompt_token_count", None
+    )
+    output_tokens = getattr(meta, "candidatesTokenCount", None) or getattr(
+        meta, "candidates_token_count", None
+    )
 
     try:
-        if hasattr(response, "response") and hasattr(
-            response.response, "usageMetadata"
-        ):
-            meta = response.response.usageMetadata
-            input_tokens = getattr(meta, "promptTokenCount", None) or getattr(
-                meta, "prompt_token_count", None
-            )
-            output_tokens = getattr(meta, "candidatesTokenCount", None) or getattr(
-                meta, "candidates_token_count", None
-            )
-        elif hasattr(response, "usage"):
-            u = response.usage
-            # Common shapes: prompt_tokens, completion_tokens
-            input_tokens = getattr(u, "prompt_tokens", None) or getattr(
-                u, "promptTokenCount", None
-            )
-            output_tokens = (
-                getattr(u, "completion_tokens", None)
-                or getattr(u, "completionTokenCount", None)
-                or getattr(u, "candidatesTokenCount", None)
-            )
-        elif hasattr(response, "metadata") and isinstance(response.metadata, dict):
-            md = response.metadata
-            input_tokens = (
-                md.get("promptTokenCount")
-                or md.get("prompt_tokens")
-                or md.get("input_tokens")
-            )
-            output_tokens = (
-                md.get("candidatesTokenCount")
-                or md.get("completion_tokens")
-                or md.get("output_tokens")
-            )
-    except Exception:
-        pass
-
-    try:
-        in_t = int(input_tokens) if input_tokens is not None else 0
+        in_t = int(input_tokens) if input_tokens else 0
     except Exception:
         in_t = 0
     try:
-        out_t = int(output_tokens) if output_tokens is not None else 0
+        out_t = int(output_tokens) if output_tokens else 0
     except Exception:
         out_t = 0
 

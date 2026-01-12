@@ -22,7 +22,7 @@ def create_results_table(results):
             "Levenshtein Score": test.get("levenshteinDistance", 0),
             "JSON Accuracy": test.get("jsonAccuracy", 0),
             "Total Cost": test.get("usage", {}).get("totalCost", 0),
-            "Duration (ms)": test.get("usage", {}).get("duration", 0),
+            "Duration (s)": test.get("usage", {}).get("duration", 0),       # already in seconds
             "Metadata": test.get("metadata", {}),
         }
         rows.append(row)
@@ -72,7 +72,7 @@ def create_model_comparison_table(results):
         ocrCost = usage.get("ocr", {}).get("totalCost")
         stats["ocr_cost"] += 0.0 if ocrCost is None else ocrCost
 
-        stats["ocr_latency"] += usage.get("ocr", {}).get("duration", 0) / 1000
+        stats["ocr_latency"] += usage.get("ocr", {}).get("duration", 0)         # already in seconds
         stats["ocr_input_tokens"] += usage.get("ocr", {}).get("inputTokens", 0)
         stats["ocr_output_tokens"] += usage.get("ocr", {}).get("outputTokens", 0)
 
@@ -95,7 +95,7 @@ def create_model_comparison_table(results):
                 0.0 if extractionCost is None else extractionCost
             )
             stats["extraction_latency"] += (
-                usage.get("extraction", {}).get("duration", 0) / 1000
+                usage.get("extraction", {}).get("duration", 0)                  # already in seconds
             )
 
     # Calculate averages
