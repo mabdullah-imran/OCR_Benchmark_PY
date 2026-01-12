@@ -107,12 +107,7 @@ class OpenAIProvider(BaseModel):
 
     def __init__(self, model: str, output_dir: Optional[str] = None):
         super().__init__(model, output_dir)
-        try:
-            # Newer OpenAI client accepts api_key and base_url
-            self.client = OpenAI()
-        except Exception:
-            self.client = None
-            raise RuntimeError("OpenAI client initialization failed")
+        self.client = OpenAI()
 
     async def ocr(self, image_path: str) -> ExtractionResult:
         t0 = time.perf_counter()
@@ -123,7 +118,7 @@ class OpenAIProvider(BaseModel):
                 "role": "user",
                 "content": [
                     {"type": "text", "text": OCR_SYSTEM_PROMPT},
-                    {"type": "image_url", "image_url": {"url": image_path}},
+                    {"type": "input_image", "image_url": image_path},
                 ],
             }
         ]
@@ -131,50 +126,9 @@ class OpenAIProvider(BaseModel):
         def _sync_call():
             # Try a few common client shapes
             try:
-                if self.client is not None:
-                    # prefer: client.chat.completions.create
-                    chat = getattr(self.client, "chat", None)
-                    if (
-                        chat is not None
-                        and hasattr(chat, "completions")
-                        and hasattr(chat.completions, "create")
-                    ):
-                        return chat.completions.create(
-                            model=self.model, messages=messages
-                        )
-
-                    # else: client.chat.create
-                    if chat is not None and hasattr(chat, "create"):
-                        return chat.create(model=self.model, messages=messages)
-
-                    # else: client.chat.completions.create at top level
-                    if hasattr(self.client, "chat_completions") and hasattr(
-                        self.client.chat_completions, "create"
-                    ):
-                        return self.client.chat_completions.create(
-                            model=self.model, messages=messages
-                        )
-
-                    # fallback to any 'create' on client passing parameters
-                    if hasattr(self.client, "create"):
-                        return self.client.create(model=self.model, messages=messages)
-
-                # Fallback: use openai module ChatCompletion if available
-                import openai as _openai
-
-                if hasattr(_openai, "ChatCompletion") and hasattr(
-                    _openai.ChatCompletion, "create"
-                ):
-                    return _openai.ChatCompletion.create(
-                        model=self.model, messages=messages
-                    )
-
-                # As a last resort try _openai.chat.create (some newer libs)
-                if hasattr(_openai, "chat") and hasattr(_openai.chat, "create"):
-                    return _openai.chat.create(model=self.model, messages=messages)
-
-                raise RuntimeError(
-                    "No compatible OpenAI client available. Install 'openai' or supply a compatible client."
+                return self.client.responses.create(
+                    model=self.model, 
+                    input=messages # pyright: ignore[reportArgumentType]
                 )
             except Exception:
                 raise
@@ -187,7 +141,7 @@ class OpenAIProvider(BaseModel):
             try:
                 if hasattr(response, "choices"):
                     # object-style
-                    ch = response.choices
+                    ch = response.choices # pyright: ignore[reportAttributeAccessIssue]
                     if isinstance(ch, (list, tuple)) and len(ch) > 0:
                         first = ch[0]
                         # Access nested message.content if available
@@ -244,14 +198,14 @@ class OpenAIProvider(BaseModel):
                 "totalCost": total_cost,
             }
 
-            return {"text": text or "", "imageBase64s": None, "usage": usage}
+            return {"text": text or "", "imageBase64s": None, "usage": usage} # pyright: ignore[reportReturnType]
         except Exception as e:
             print("OpenAIProvider OCR error:", e)
             print(traceback.format_exc())
             raise
 
     async def extract_from_text(
-        self, text: str, schema: Dict[str, Any]
+        self, text: str, schema: Dict[str, Any], imageBase64s = None
     ) -> ExtractionResult:
         t0 = time.perf_counter()
         messages = [
@@ -267,21 +221,18 @@ class OpenAIProvider(BaseModel):
         filtered_schema = self.convert_schema_for_openai(schema)
 
         def _sync_call():
-            # Try a few common client shapes. Prefer responses.create to avoid passing
-            # a text_format dict (the SDK expects a type/class for auto-parsing).
-            try:
-                if self.client is not None:
-                    responses = getattr(self.client, "responses", None)
-                    if responses is not None:
-                        # Prefer the create endpoint which returns raw output_text we can parse
-                        if hasattr(responses, "create"):
-                            return responses.create(model=self.model, input=messages)
-                        # Fall back to parse without text_format to avoid SDK auto-parsing
-                        if hasattr(responses, "parse"):
-                            return responses.parse(model=self.model, input=messages)
-                raise RuntimeError("No compatible OpenAI responses API available")
-            except Exception:
-                raise RuntimeError("OpenAI _sync_call failed")
+            return self.client.responses.create(
+                model=self.model, 
+                input=messages, # pyright: ignore[reportArgumentType]
+                text={
+                    "format": {
+                        "type": "json_schema",
+                        "name": "output_format",
+                        "schema": filtered_schema,
+                        "strict": True,
+                    }
+                }
+            ) 
 
         try:
             response = await asyncio.to_thread(_sync_call)
@@ -310,7 +261,7 @@ class OpenAIProvider(BaseModel):
                 "totalCost": total_cost,
             }
 
-            return {"json": json_obj, "usage": usage}
+            return {"json": json_obj, "usage": usage} # pyright: ignore[reportReturnType]
         except Exception as e:
             print("OpenAIProvider extract_from_text error:", e)
             print(traceback.format_exc())
@@ -332,28 +283,33 @@ class OpenAIProvider(BaseModel):
             data = await asyncio.to_thread(_fetch_bytes, image_path)
             b64 = base64.b64encode(data).decode("utf-8")
 
-            image_part = None
-            try:
-                image_part = {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "input_image",
-                            "image_url": f"data:{get_mime_type(image_path)};base64,{b64}",
-                        }
-                    ]
-                }
-            except Exception:
-                image_part = {
-                    "inlineData": {"type_data": type(data).__name__, "mimeType": get_mime_type(image_path)}
-                }
+            image_part = {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_image",
+                        "image_url": f"data:{get_mime_type(image_path)};base64,{b64}",
+                    }
+                ]
+            }
+
+            file_part = {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_file",
+                        "filename": Path(image_path).name,
+                        "file_data": f"data:{get_mime_type(image_path)};base64,{b64}",
+                    }
+                ]
+            }
 
             messages = [
                 {
                     "role": "system",
                     "content": IMAGE_EXTRACTION_SYSTEM_PROMPT
                 },
-                image_part
+                file_part if get_mime_type(image_path).startswith("application/") else image_part
             ]
 
             filtered_schema = self.convert_schema_for_openai(schema)
@@ -372,7 +328,6 @@ class OpenAIProvider(BaseModel):
                             }
                         },
                     )
-                    if self.client is not None else None
                 )
             )
 
@@ -389,7 +344,7 @@ class OpenAIProvider(BaseModel):
                     raise
             end = time.perf_counter()
 
-            usage = dict(response.usage)
+            usage = dict(response.usage) if response.usage else {}
 
             duration = end - t0
 
@@ -413,7 +368,7 @@ class OpenAIProvider(BaseModel):
 
             merged_usage = {**usage, **usage_payload}
 
-            return {"json": json_obj, "usage": merged_usage}
+            return {"json": json_obj, "usage": merged_usage} # pyright: ignore[reportReturnType]
         except Exception as e:
             print("OpenAI extract_from_image error:", e)
             print(traceback.format_exc())
@@ -426,42 +381,40 @@ class OpenAIProvider(BaseModel):
             if not node or not isinstance(node, dict):
                 return node
 
+            # Normalize enum/type shorthand
             if node.get("type") == "enum" and node.get("enum") is not None:
                 node["type"] = "string"
             if "enum" in node and not node.get("type"):
                 node["type"] = "string"
 
-            # Ensure object-like nodes explicitly forbid additional properties
-            # and include a `required` array listing every property key (OpenAI expects this)
+            # Recursively handle combinators: ensure each branch is processed
+            for comb in ("anyOf", "oneOf", "allOf"):
+                if comb in node and isinstance(node[comb], list):
+                    node[comb] = [process_node(elem) if isinstance(elem, dict) else elem for elem in node[comb]]
+                    # After processing branches, ensure object-like branches have constraints
+                    for i, elem in enumerate(node[comb]):
+                        if isinstance(elem, dict) and (elem.get("type") == "object" or elem.get("properties")):
+                            props = elem.get("properties")
+                            if isinstance(props, dict):
+                                elem["additionalProperties"] = False
+                                elem["required"] = list(props.keys())
+                                node[comb][i] = elem
+
+            # If this node is object-like, enforce OpenAI expectations
             if node.get("type") == "object" or node.get("properties"):
-                node["additionalProperties"] = False
                 props = node.get("properties")
                 if isinstance(props, dict):
-                    # OpenAI's schema validator expects `required` to be present and include
-                    # every key defined under `properties` in object schemas.
+                    node["additionalProperties"] = False
                     node["required"] = list(props.keys())
 
-            if "not" in node:
-                not_node = node.get("not")
-                if isinstance(not_node, dict) and not_node.get("type") == "null":
-                    node.pop("not", None)
-                    node["nullable"] = False
-                else:
-                    process_node(not_node)
+            # If this node is an array, process its items (items may contain combinators)
+            if node.get("type") == "array" or node.get("items"):
+                items = node.get("items")
+                if isinstance(items, dict):
+                    node["items"] = process_node(items)
 
-            if node.get("type") == "array" and node.get("items"):
-                items = node["items"]
-                if node.get("required"):
-                    if not items.get("required"):
-                        items["required"] = node["required"]
-                    else:
-                        items["required"] = list(
-                            {*items.get("required", []), *node.get("required", [])}
-                        )
-                    node.pop("required", None)
-                process_node(items)
-
-            if node.get("properties") and isinstance(node.get("properties"), dict):
+            # Recurse into properties
+            if isinstance(node.get("properties"), dict):
                 for k, v in list(node["properties"].items()):
                     node["properties"][k] = process_node(v)
 
